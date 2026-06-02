@@ -8,10 +8,10 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from solution.agent.graph import run_agent
-import solution.agent.graph as solution_graph
-from solution.utils.data_store import OrderDataStore
+from src.agent.graph import run_agent
+import src.agent.graph as solution_graph
 from src.core.schemas import OrderLineInput
+from src.utils.data_store import OrderDataStore
 
 
 def test_save_order_matches_expected_fixture(tmp_path: Path) -> None:
@@ -48,7 +48,7 @@ def test_clarification_case_stops_before_model_or_tools() -> None:
     )
 
     assert result.tool_calls == []
-    assert "cần thêm" in result.final_answer.lower()
+    assert "còn thiếu" in result.final_answer.lower()
     assert "số điện thoại" in result.final_answer.lower()
     assert "địa chỉ giao hàng" in result.final_answer.lower()
 
@@ -62,7 +62,7 @@ def test_guardrail_case_refuses_without_tools() -> None:
 
     assert result.tool_calls == []
     assert "không thể" in result.final_answer.lower()
-    assert "khuyến mãi" in result.final_answer.lower()
+    assert "giảm giá" in result.final_answer.lower()
 
 
 def test_reference_agent_no_longer_uses_preflight_shortcuts() -> None:
